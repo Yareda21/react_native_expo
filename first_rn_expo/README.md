@@ -1,127 +1,50 @@
-# React Native with Expo - Learning Project 📱
+# Welcome to your Expo app 👋
 
-This project is designed to help you learn React Native development using Expo. It's a practical guide that covers fundamental concepts and comparisons between web and mobile development.
+This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
 
-## Understanding the Basics
-
-### React Native vs Expo
-
--   **React Native**: A framework for building native mobile applications using JavaScript and React
--   **Expo**: A platform and framework built on top of React Native that simplifies the development process
-    -   Provides additional tools and services
-    -   Handles complex native configurations automatically
-    -   Offers easier testing and deployment options
-
-### React vs React Native Comparison
-
-| React (Web)     | React Native (Mobile) | Description                           |
-| --------------- | --------------------- | ------------------------------------- |
-| `<div>`         | `<View>`              | Container component for layout        |
-| `<p>`, `<span>` | `<Text>`              | Text display component                |
-| `<input>`       | `<TextInput>`         | User input component                  |
-| `<button>`      | `<TouchableOpacity>`  | Interactive button component          |
-| `<img>`         | `<Image>`             | Image display component               |
-| `<ul>`, `<ol>`  | `<FlatList>`          | List rendering component              |
-| CSS styles      | StyleSheet API        | Styling system                        |
-| `onClick`       | `onPress`             | Event handling                        |
-| `className`     | `style`               | Styling property                      |
-| Flexbox (web)   | Flexbox (mobile)      | Layout system (with some differences) |
-| DOM             | Native Views          | Underlying rendering system           |
-| Browser APIs    | Native APIs           | Platform-specific functionality       |
-
-Key Differences:
-
--   React Native uses native components instead of HTML elements
--   Styling is done through JavaScript objects instead of CSS
--   Layout is primarily done using Flexbox
--   No CSS classes or IDs - styles are applied directly
--   No HTML or CSS - everything is JavaScript
-
-### Essential React Native Components
-
-#### Basic Components
-
--   `<View>`:
-
-    -   The most fundamental component
-    -   Similar to `<div>` in web development
-    -   Used for layout and container purposes
-    -   Supports Flexbox layout
-    -   Can be nested to create complex layouts
-
--   `<Text>`:
-
-    -   Used for displaying text
-    -   Must wrap all text content (unlike web where text can be free)
-    -   Supports nested text with different styles
-    -   Can handle text selection and copying
-    -   Supports various text properties (color, size, weight, etc.)
-
--   `<TextInput>`:
-    -   Handles user text input
-    -   Similar to `<input>` in web
-    -   Supports various keyboard types
-    -   Can handle multiline input
-    -   Includes features like auto-capitalization and auto-correction
-
-#### Interactive Components
-
--   `<TouchableOpacity>`:
-
-    -   Creates touchable elements with opacity feedback
-    -   Used for buttons and interactive elements
-    -   Provides visual feedback on press
-    -   Can be customized with different opacity levels
-
--   `<TouchableHighlight>`:
-
-    -   Similar to TouchableOpacity
-    -   Changes background color on press
-    -   Good for list items and cards
-
--   `<TouchableWithoutFeedback>`:
-    -   For touch events without visual feedback
-    -   Useful for custom touch handling
-
-#### Layout Components
-
--   `<ScrollView>`:
-
-    -   For scrollable content
-    -   Renders all children at once
-    -   Good for small lists and content
-    -   Supports horizontal and vertical scrolling
-
--   `<FlatList>`:
-    -   For long lists of data
-    -   Implements performance optimizations
-    -   Only renders items that are currently visible
-    -   Supports pull-to-refresh and infinite scroll
-
-#### Media Components
-
--   `<Image>`:
-
-    -   Displays images
-    -   Supports local and remote images
-    -   Can handle different image formats
-    -   Includes caching and loading states
-
--   `<ImageBackground>`:
-    -   Similar to Image but can contain child components
-    -   Useful for background images with content
-
-#### Platform-Specific Components
-
--   `<Platform.select()`:
-    -   For platform-specific code
-    -   Allows different implementations for iOS and Android
-    -   Can be used for components, styles, or logic
-
-## Project Setup
+## Get started
 
 1. Install dependencies
 
-    ```
+   ```bash
+   npm install
+   ```
 
-    ```
+2. Start the app
+
+   ```bash
+   npx expo start
+   ```
+
+In the output, you'll find options to open the app in a
+
+- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
+- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
+- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
+- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+
+You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+
+## Get a fresh project
+
+When you're ready, run:
+
+```bash
+npm run reset-project
+```
+
+This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+
+## Learn more
+
+To learn more about developing your project with Expo, look at the following resources:
+
+- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
+- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+
+## Join the community
+
+Join our community of developers creating universal apps.
+
+- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
+- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
