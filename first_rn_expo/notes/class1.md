@@ -26,6 +26,6 @@ npm install nativewind tailwindcss react-native-reanimated react-native-safe-are
 
 ## Design Resources
 
--   **Figma Design Link**: [Movie App Design](https://www.figma.com/design/c6NHYQem8G59odVSijIjl2/Movie-App-w--React-Native?node-id=0-1&t=A6ED9WqckTjlU9hZ-1)
+-   **Figma Design Link**: [Movie App Design](https://www.figma.com/design/c6NHYQem8G59odVSijIjl2/Movie-App-w--React-Native?node-id=2-2&p=f&t=XYKsEqygeLB3WBCC-0)
     -   Contains the complete UI/UX design for the movie application
     -   Includes all components, layouts, and styling guidelines
