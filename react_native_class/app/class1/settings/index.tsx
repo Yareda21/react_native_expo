@@ -37,7 +37,7 @@ const Settings = () => {
             </View>
 
             <View className="mt-8">
-                <Link href="/" asChild>
+                <Link href="/class1/index" asChild>
                     <Pressable className="bg-primary p-4 rounded-lg">
                         <Text className="text-white text-center text-lg">
                             Back to Home

@@ -1,6 +1,6 @@
 import { Link } from "expo-router";
 import React from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { Text, View } from "react-native";
 
 import {movieList} from "@/assets/data/movie"
 
@@ -25,4 +25,4 @@ const Movies = () => {
 };
 
 export default Movies;
-const styles = StyleSheet.create({});
+
