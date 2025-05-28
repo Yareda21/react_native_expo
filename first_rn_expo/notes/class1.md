@@ -2,7 +2,10 @@
 
 ## Initial Setup
 
-1. Reset the project to remove boilerplate code:
+1. Creating a react native with expo project go to this link and follow the steps
+   [React Native Setup](https://reactnative.dev/docs/environment-setup)
+
+2. Reset the project to remove boilerplate code:
     ```bash
     npm run reset-project
     ```
@@ -11,11 +14,9 @@
 
 ### Required Dependencies
 
-Install the following packages for styling and animations:
+Also in order to integrate nativewind (tailwind) go to this link and follow the following steps
 
-```bash
-npm install nativewind tailwindcss react-native-reanimated react-native-safe-area-context
-```
+[Nativewind Setup](https://www.nativewind.dev/docs/getting-started/installation)
 
 ### Purpose of Each Package
 
@@ -24,15 +25,12 @@ npm install nativewind tailwindcss react-native-reanimated react-native-safe-are
 -   **React Native Reanimated**: Advanced animations library
 -   **React Native Safe Area Context**: Handles safe area insets for different devices
 
-## Design Resources
+## Final Grand Project
 
--   **Figma Design Link**: [Movie App Design](https://www.figma.com/design/c6NHYQem8G59odVSijIjl2/Movie-App-w--React-Native?node-id=2-2&p=f&t=XYKsEqygeLB3WBCC-0)
+-   After covering the basics of React Native with Expo, we will build the following app
+-   **Figma Design Link**: Final Project [Movie App Design](https://www.figma.com/design/c6NHYQem8G59odVSijIjl2/Movie-App-w--React-Native?node-id=2-2&p=f&t=XYKsEqygeLB3WBCC-0)
     -   Contains the complete UI/UX design for the movie application
     -   Includes all components, layouts, and styling guidelines
-
-## Custmizing tailwind css
-
-head to tailwind.config.js to add custom commands
 
 ## Routing and Navigation in react native
 
