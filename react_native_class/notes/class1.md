@@ -46,7 +46,7 @@ exercise, create a file called user.tsx and use a link in the home page to navig
 
 create a file called movie.tsx and create a link to go to this page inside the home page
 
-<b>What if i want to send the name of the movie from the home page?</b>
+<b>What if i want to send the name of the movie from the home page?</b> <br>
 this time we create a dynamic page by wrapping id with in the []
 so create a folder called movie and inside create a file with the name '[id].tsx' which indicates dynamic id will be passed
 
@@ -115,7 +115,7 @@ on home page - link - /movie/avengers
     - Add a "Settings" button that links to `/settings`
     - In the settings page, add links to the sub-pages
 
-### Bonus Challenge
+### Future added features
 
 1. Implement a breadcrumb navigation system
 2. Add a loading state when navigating between pages
