@@ -1,50 +1,141 @@
-# Welcome to your Expo app 👋
+# React Native Theming with Dark and Light Mode
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
-<h1>For more info - check the notes inside a folder `notes` on this repo</h1>
-## Get started
+## Overview
 
-1. Install dependencies
+This project demonstrates how to implement a responsive theme system in React Native using Expo Router and NativeWind, supporting both dark and light modes.
 
-   ```bash
-   npm install
-   ```
+## Theme Configuration
 
-2. Start the app
+### 1. Device Theme Detection
 
-   ```bash
-   npx expo start
-   ```
+-   In `app.json`, the setting `"userInterfaceStyle": "automatic"` enables automatic theme detection based on device settings
+-   Use the `useColorScheme()` hook from React Native to access the current theme:
 
-In the output, you'll find options to open the app in a
-
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
-
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
-
-## Get a fresh project
-
-When you're ready, run:
-
-```bash
-npm run reset-project
+```typescript
+const colorTheme = useColorScheme(); // Returns 'dark' or 'light'
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+### 2. Theme Colors Setup
 
-## Learn more
+Two approaches to define theme colors:
 
-To learn more about developing your project with Expo, look at the following resources:
+#### A. Using Constants (colors.js)
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+```javascript
+export const Colors = {
+    dark: {
+        text: "#d4d4d4",
+        title: "#fff",
+        background: "#252231",
+        // ... other colors
+    },
+    light: {
+        text: "#625f72",
+        title: "#201e2b",
+        background: "#e0dfe8",
+        // ... other colors
+    },
+};
+```
 
-## Join the community
+#### B. Using Tailwind Config (tailwind.config.js)
 
-Join our community of developers creating universal apps.
+```javascript
+module.exports = {
+    theme: {
+        extend: {
+            colors: {
+                dark: {
+                    text: "#d4d4d4",
+                    // ... other colors
+                },
+                light: {
+                    text: "#625f72",
+                    // ... other colors
+                },
+            },
+        },
+    },
+};
+```
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+## Implementation
+
+### 1. Root Layout Styling
+
+-   Apply theme styles in the root layout to affect all routes
+-   Use StatusBar component for proper status bar theming:
+
+```typescript
+import { StatusBar } from "expo-status-bar";
+
+// In your root layout
+<StatusBar style="auto" />;
+```
+
+### 2. Screen-Specific Styling
+
+-   Use a combination of inline styles and NativeWind classes
+-   Inline styles for theme-dependent styles:
+
+```typescript
+style={{ backgroundColor: theme.background }}
+```
+
+-   NativeWind classes for static styles:
+
+```typescript
+className = "flex-1 p-6 space-y-4";
+```
+
+### 3. Best Practices
+
+-   Keep theme colors in a centralized location
+-   Use semantic color names (e.g., 'text', 'background' instead of hex codes)
+-   Combine NativeWind with inline styles for optimal theming
+-   Test both themes thoroughly
+
+## Exercise: Create a Profile Screen
+
+Create a new profile screen that implements the following requirements:
+
+1. Create a new file `app/profile.tsx`
+2. Implement a profile screen with:
+    - Profile header with avatar placeholder
+    - User information section
+    - Settings section
+    - Logout button
+3. Requirements:
+    - Must support both dark and light themes
+    - Use NativeWind for layout and static styles
+    - Use theme colors for dynamic styles
+    - Include proper spacing and typography
+    - Add navigation from the home screen
+    - Implement a simple avatar placeholder using a colored circle
+
+### Bonus Challenges:
+
+1. Add theme toggle button
+2. Implement smooth theme transition animations
+3. Add more interactive elements (buttons, toggles)
+4. Create a custom hook for theme management
+
+### Expected Folder Structure:
+
+```
+app/
+├── _layout.tsx
+├── index.tsx
+├── about.tsx
+└── profile.tsx
+constants/
+└── colors.js
+```
+
+### Tips:
+
+-   Use the existing theme system
+-   Follow the same styling patterns as the About and Index pages
+-   Test both themes before submitting
+-   Keep the UI clean and consistent with existing screens
+
