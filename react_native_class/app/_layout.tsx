@@ -1,7 +1,7 @@
 import { Colors } from "@/constants/colors";
 import { Stack } from "expo-router";
 import React from "react";
-import { StatusBar, useColorScheme } from "react-native";
+import { useColorScheme } from "react-native";
 import "./global.css";
 const RootLayout = () => {
     const colorTheme = useColorScheme();
@@ -13,9 +13,11 @@ const RootLayout = () => {
                 screenOptions={{
                     headerStyle: { backgroundColor: theme.navBackground },
                     headerTintColor: theme.title,
+                    headerShown: false,
                 }}
             >
                 <Stack.Screen name="index" />
+                <Stack.Screen name="(auth)" />
             </Stack>
         </>
     );

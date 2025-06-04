@@ -1,96 +1,168 @@
-# Class 3 - Themed UI Components
+# Class 4 - Authentication Screens Exercise
 
-This class focuses on creating reusable themed components to maintain consistent styling across the application.
+## Exercise Overview
 
-## Overview
+Create a simple authentication system with Login and Register screens, implementing navigation between them. This exercise will help you understand:
 
-Instead of adding styling to individual elements, we create themed components that can be reused throughout the application. This approach ensures consistency and makes theme management more maintainable.
+-   Screen navigation in React Native
+-   Form handling
+-   Basic authentication UI/UX
+-   Route organization
 
-## Components Structure
+## Requirements
 
-The components are organized in a dedicated `components` folder. Here's what we'll create:
+### 1. Screen Structure
 
-### 1. ThemedView Component
+Create the following screens in your `app` directory:
 
-A base component that handles theme-based background colors.
+```
+app/
+├── index.tsx (Home Screen)
+├── (auth)/
+│   ├── login.tsx
+│   └── register.tsx
+└── _layout.tsx
+```
+
+### 2. Home Screen (index.tsx)
+
+-   Display a welcome message
+-   Add two buttons:
+    -   "Login" - navigates to login screen
+    -   "Register" - navigates to register screen
+-   Use the themed components we created earlier for consistent styling
+
+### 3. Login Screen (login.tsx)
+
+Create a login form with:
+
+-   Email input field
+-   Password input field
+-   "Login" button
+-   "Don't have an account? Register" link
+-   Form validation for:
+    -   Valid email format
+    -   Password length (minimum 6 characters)
+
+### 4. Register Screen (register.tsx)
+
+Create a registration form with:
+
+-   Email input field
+-   Password input field
+-   Confirm password field
+-   "Register" button
+-   "Already have an account? Login" link
+-   Form validation for:
+    -   Valid email format
+    -   Password length (minimum 6 characters)
+    -   Password confirmation match
+
+## Implementation Guidelines
+
+### Navigation Setup
 
 ```typescript
-// ThemedView.tsx
-import { useColorScheme } from "react-native";
-import { Colors } from "../constants/Colors";
+// _layout.tsx
+import { Stack } from "expo-router";
 
-interface ThemedViewProps {
-    children: React.ReactNode;
-    style?: any;
-}
-
-export const ThemedView = ({ children, style, ...props }: ThemedViewProps) => {
-    const themeColor = useColorScheme();
-    const theme = Colors[themeColor ?? "light"];
-
+export default function Layout() {
     return (
-        <View style={[{ backgroundColor: theme.background }, style]} {...props}>
-            {children}
-        </View>
+        <Stack>
+            <Stack.Screen
+                name="index"
+                options={{
+                    title: "Home",
+                    headerShown: true,
+                }}
+            />
+            <Stack.Screen
+                name="(auth)/login"
+                options={{
+                    title: "Login",
+                    headerShown: true,
+                }}
+            />
+            <Stack.Screen
+                name="(auth)/register"
+                options={{
+                    title: "Register",
+                    headerShown: true,
+                }}
+            />
+        </Stack>
     );
-};
-```
-
-### 2. ThemedText Component
-
-A flexible text component that can handle both title and normal text styles.
-
-```typescript
-// ThemedText.tsx
-interface ThemedTextProps {
-    title?: boolean;
-    children: React.ReactNode;
 }
-
-export const ThemedText = ({ title, children, ...props }: ThemedTextProps) => {
-    const theme = Colors[colorTheme ?? "light"];
-    const textColor = title ? theme.title : theme.text;
-
-    return (
-        <Text style={{ color: textColor }} {...props}>
-            {children}
-        </Text>
-    );
-};
 ```
 
-### 3. Dynamic Theme Components
+### Form Handling
 
-For components that need to change based on the theme (like images):
+Use React's useState for form management:
 
 ```typescript
-// Example of dynamic image rendering
-const logo = colorTheme === "dark" ? image1 : image2;
-return <Image source={logo} className="w-[200px] h-[200px]" />;
+const [email, setEmail] = useState("");
+const [password, setPassword] = useState("");
 ```
 
-### 4. Utility Components
-
-Simple but useful components like the Spacer:
+### Navigation Using Links
 
 ```typescript
-// Spacer.tsx
-export const Spacer = () => <View className="w-full h-[40px]" />;
+import { Link } from "expo-router";
+
+// In your component:
+<Link href="/login" asChild>
+  <Pressable>
+    <ThemedText>Login</ThemedText>
+  </Pressable>
+</Link>
+
+<Link href="/register" asChild>
+  <Pressable>
+    <ThemedText>Register</ThemedText>
+  </Pressable>
+</Link>
+
+// For text links:
+<Link href="/login">
+  <ThemedText>Don't have an account? Register</ThemedText>
+</Link>
+
+<Link href="/register">
+  <ThemedText>Already have an account? Login</ThemedText>
+</Link>
 ```
 
-## Best Practices
+## Styling Guidelines
 
-1. Always use themed components for consistent styling
-2. Make components flexible with props for customization
-3. Use TypeScript interfaces for better type safety
-4. Keep components focused and single-purpose
-5. Document component props and usage
+1. Use the themed components we created earlier:
+    - ThemedView for containers
+    - ThemedText for text elements
+    - ThemedCard for form containers
+2. Maintain consistent spacing using the Spacer component
+3. Ensure proper contrast for accessibility
+4. Add loading states for buttons during form submission
 
-## Implementation Notes
+## Bonus Tasks
 
--   Components should be reusable and configurable
--   Use TypeScript for better type safety and development experience
--   Consider accessibility when implementing themed components
--   Test components in both light and dark themes
+1. Add password visibility toggle
+2. Implement "Remember Me" functionality
+3. Add form error messages with animations
+4. Create a password strength indicator
+5. Add social login options (Google, Facebook)
 
-For detailed implementation, refer to the code in the components directory.
+## Testing Checklist
+
+-   [ ] Navigation works between all screens
+-   [ ] Form validation works correctly
+-   [ ] Error messages are displayed appropriately
+-   [ ] UI is responsive and works on different screen sizes
+-   [ ] Theme switching works correctly on all screens
+-   [ ] Form inputs are properly styled and accessible
+
+## Resources
+
+-   [Expo Router Documentation](https://docs.expo.dev/router/introduction/)
+-   [React Native Form Handling](https://reactnative.dev/docs/textinput)
+-   [React Native Navigation](https://reactnavigation.org/)
+
+Remember to commit your changes regularly and test thoroughly on both iOS and Android devices.

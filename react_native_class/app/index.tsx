@@ -1,44 +1,21 @@
-import ThemedView from "@/components/ThemedView";
-import { Colors } from "@/constants/colors";
-import { Link } from "expo-router";
+import { Pressable } from "react-native";
 import React from "react";
-import { Pressable, Text, useColorScheme, View } from "react-native";
+import ThemedView from "@/components/ThemedView";
+import { Link } from "expo-router";
+import Spacer from "@/components/Spacer";
 
-const Index = () => {
-    const colorTheme = useColorScheme();
-    const theme = Colors[colorTheme ?? "light"];
-
+const index = () => {
     return (
-        <ThemedView
-            style={{ backgroundColor: theme.background }}
-            className="flex-1 p-6"
-        >
-            <View className="space-y-6">
-                <Text
-                    style={{ color: theme.title }}
-                    className="text-3xl font-bold"
-                >
-                    Welcome
-                </Text>
-
-                <Text
-                    style={{ color: theme.text }}
-                    className="text-base leading-6"
-                >
-                    This is the home page of our application. Feel free to
-                    explore!
-                </Text>
-
-                <Pressable className="mt-4 bg-primary p-4 rounded-lg">
-                    <Link href="/About">
-                        <Text className="text-white text-center font-semibold">
-                            Learn More About Us
-                        </Text>
-                    </Link>
-                </Pressable>
-            </View>
+        <ThemedView className=" w-full flex-1 justify-center items-center">
+            <Pressable className=" border px-6 py-3 rounded-lg bg-slate-400">
+                <Link href="/Login">Login </Link>
+            </Pressable>
+            <Spacer />
+            <Pressable className=" border px-6 py-3 rounded-lg bg-slate-400">
+                <Link href="/Register">Register </Link>
+            </Pressable>
         </ThemedView>
     );
 };
 
-export default Index;
+export default index;
