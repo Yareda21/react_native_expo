@@ -1,3 +1,4 @@
+import ThemedView from "@/components/ThemedView";
 import { Colors } from "@/constants/colors";
 import { Link } from "expo-router";
 import React from "react";
@@ -8,7 +9,7 @@ const Index = () => {
     const theme = Colors[colorTheme ?? "light"];
 
     return (
-        <View
+        <ThemedView
             style={{ backgroundColor: theme.background }}
             className="flex-1 p-6"
         >
@@ -36,7 +37,7 @@ const Index = () => {
                     </Link>
                 </Pressable>
             </View>
-        </View>
+        </ThemedView>
     );
 };
 
