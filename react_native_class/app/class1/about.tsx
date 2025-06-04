@@ -11,4 +11,4 @@ const about = () => {
 
 export default about;
 
-const styles = StyleSheet.create({});
+
