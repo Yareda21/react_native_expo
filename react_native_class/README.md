@@ -1,50 +1,96 @@
-# Welcome to your Expo app 👋
+# Class 3 - Themed UI Components
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
-<h1>For more info - check the notes inside a folder `notes` on this repo</h1>
-## Get started
+This class focuses on creating reusable themed components to maintain consistent styling across the application.
 
-1. Install dependencies
+## Overview
 
-   ```bash
-   npm install
-   ```
+Instead of adding styling to individual elements, we create themed components that can be reused throughout the application. This approach ensures consistency and makes theme management more maintainable.
 
-2. Start the app
+## Components Structure
 
-   ```bash
-   npx expo start
-   ```
+The components are organized in a dedicated `components` folder. Here's what we'll create:
 
-In the output, you'll find options to open the app in a
+### 1. ThemedView Component
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+A base component that handles theme-based background colors.
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+```typescript
+// ThemedView.tsx
+import { useColorScheme } from "react-native";
+import { Colors } from "../constants/Colors";
 
-## Get a fresh project
+interface ThemedViewProps {
+    children: React.ReactNode;
+    style?: any;
+}
 
-When you're ready, run:
+export const ThemedView = ({ children, style, ...props }: ThemedViewProps) => {
+    const themeColor = useColorScheme();
+    const theme = Colors[themeColor ?? "light"];
 
-```bash
-npm run reset-project
+    return (
+        <View style={[{ backgroundColor: theme.background }, style]} {...props}>
+            {children}
+        </View>
+    );
+};
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+### 2. ThemedText Component
 
-## Learn more
+A flexible text component that can handle both title and normal text styles.
 
-To learn more about developing your project with Expo, look at the following resources:
+```typescript
+// ThemedText.tsx
+interface ThemedTextProps {
+    title?: boolean;
+    children: React.ReactNode;
+}
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+export const ThemedText = ({ title, children, ...props }: ThemedTextProps) => {
+    const theme = Colors[colorTheme ?? "light"];
+    const textColor = title ? theme.title : theme.text;
 
-## Join the community
+    return (
+        <Text style={{ color: textColor }} {...props}>
+            {children}
+        </Text>
+    );
+};
+```
 
-Join our community of developers creating universal apps.
+### 3. Dynamic Theme Components
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+For components that need to change based on the theme (like images):
+
+```typescript
+// Example of dynamic image rendering
+const logo = colorTheme === "dark" ? image1 : image2;
+return <Image source={logo} className="w-[200px] h-[200px]" />;
+```
+
+### 4. Utility Components
+
+Simple but useful components like the Spacer:
+
+```typescript
+// Spacer.tsx
+export const Spacer = () => <View className="w-full h-[40px]" />;
+```
+
+## Best Practices
+
+1. Always use themed components for consistent styling
+2. Make components flexible with props for customization
+3. Use TypeScript interfaces for better type safety
+4. Keep components focused and single-purpose
+5. Document component props and usage
+
+## Implementation Notes
+
+-   Components should be reusable and configurable
+-   Use TypeScript for better type safety and development experience
+-   Consider accessibility when implementing themed components
+-   Test components in both light and dark themes
+
+For detailed implementation, refer to the code in the components directory.
