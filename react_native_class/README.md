@@ -8,6 +8,7 @@ Create a simple authentication system with Login and Register screens, implement
 -   Form handling
 -   Basic authentication UI/UX
 -   Route organization
+-   Protected routes and authentication flow
 
 ## Requirements
 
@@ -21,6 +22,8 @@ app/
 ├── (auth)/
 │   ├── login.tsx
 │   └── register.tsx
+├── (protected)/
+│   └── dashboard.tsx
 └── _layout.tsx
 ```
 
@@ -43,6 +46,7 @@ Create a login form with:
 -   Form validation for:
     -   Valid email format
     -   Password length (minimum 6 characters)
+-   On successful login, navigate to the protected dashboard
 
 ### 4. Register Screen (register.tsx)
 
@@ -58,97 +62,24 @@ Create a registration form with:
     -   Password length (minimum 6 characters)
     -   Password confirmation match
 
+### 5. Protected Dashboard (dashboard.tsx)
+
+Create a protected dashboard screen that:
+
+-   Is only accessible after successful authentication
+-   Includes authentication check on mount
+-   Redirects to login if not authenticated
+-   Displays protected content
+-   Can be accessed after successful login
+
 ## Implementation Guidelines
 
-### Navigation Setup
+See the following files for implementation details:
 
-```typescript
-// _layout.tsx
-import { Stack } from "expo-router";
-
-export default function Layout() {
-    return (
-        <Stack>
-            <Stack.Screen
-                name="index"
-                options={{
-                    title: "Home",
-                    headerShown: true,
-                }}
-            />
-            <Stack.Screen
-                name="(auth)/login"
-                options={{
-                    title: "Login",
-                    headerShown: true,
-                }}
-            />
-            <Stack.Screen
-                name="(auth)/register"
-                options={{
-                    title: "Register",
-                    headerShown: true,
-                }}
-            />
-        </Stack>
-    );
-}
-```
-
-### Form Handling
-
-Use React's useState for form management:
-
-```typescript
-const [email, setEmail] = useState("");
-const [password, setPassword] = useState("");
-```
-
-### Navigation Using Links
-
-```typescript
-import { Link } from "expo-router";
-
-// In your component:
-<Link href="/login" asChild>
-  <Pressable>
-    <ThemedText>Login</ThemedText>
-  </Pressable>
-</Link>
-
-<Link href="/register" asChild>
-  <Pressable>
-    <ThemedText>Register</ThemedText>
-  </Pressable>
-</Link>
-
-// For text links:
-<Link href="/login">
-  <ThemedText>Don't have an account? Register</ThemedText>
-</Link>
-
-<Link href="/register">
-  <ThemedText>Already have an account? Login</ThemedText>
-</Link>
-```
-
-## Styling Guidelines
-
-1. Use the themed components we created earlier:
-    - ThemedView for containers
-    - ThemedText for text elements
-    - ThemedCard for form containers
-2. Maintain consistent spacing using the Spacer component
-3. Ensure proper contrast for accessibility
-4. Add loading states for buttons during form submission
-
-## Bonus Tasks
-
-1. Add password visibility toggle
-2. Implement "Remember Me" functionality
-3. Add form error messages with animations
-4. Create a password strength indicator
-5. Add social login options (Google, Facebook)
+-   `_layout.tsx` - Navigation setup and screen configuration
+-   `(auth)/login.tsx` - Login form implementation
+-   `(auth)/register.tsx` - Registration form implementation
+-   `(protected)/dashboard.tsx` - Protected route implementation
 
 ## Testing Checklist
 
@@ -158,6 +89,8 @@ import { Link } from "expo-router";
 -   [ ] UI is responsive and works on different screen sizes
 -   [ ] Theme switching works correctly on all screens
 -   [ ] Form inputs are properly styled and accessible
+-   [ ] Protected route redirects to login when not authenticated
+-   [ ] Successful login navigates to protected dashboard
 
 ## Resources
 

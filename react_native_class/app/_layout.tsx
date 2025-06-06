@@ -18,6 +18,13 @@ const RootLayout = () => {
             >
                 <Stack.Screen name="index" />
                 <Stack.Screen name="(auth)" />
+                <Stack.Screen
+                    name="(protected)"
+                    options={{
+                        headerShown: true,
+                        title: "Dashboard",
+                    }}
+                />
             </Stack>
         </>
     );

@@ -1,6 +1,6 @@
 import { View, TextInput, Pressable, Alert } from "react-native";
 import React, { useState } from "react";
-import { Link } from "expo-router";
+import { Link, router } from "expo-router";
 import ThemedView from "@/components/ThemedView";
 import ThemedText from "@/components/ThemedText";
 import ThemedCard from "@/components/ThemedCard";
@@ -28,8 +28,12 @@ const Login = () => {
             return;
         }
 
-        // TODO: Implement actual login logic
-        Alert.alert("Success", "Login successful!");
+        if (password === "123456" && email === "abc@abc.com") {
+            // Redirect to dashboard after successful login
+            router.replace("/(protected)/dashboard");
+        } else {
+            Alert.alert("Wrong", "Wrong Password and E-Mail!")
+        }
     };
 
     return (
