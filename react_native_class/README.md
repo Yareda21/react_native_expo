@@ -1,50 +1,89 @@
-# Welcome to your Expo app 👋
+# Class 5 - Tabs and their Navigation
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
-<h1>For more info - check the notes inside a folder `notes` on this repo</h1>
-## Get started
+## Setting up Tab Navigation in React Native Expo
 
-1. Install dependencies
+### Step 1: Create Protected Folder Structure
 
-   ```bash
-   npm install
-   ```
+1. Create a new folder called `(protected)` inside the `app` directory
+2. Inside the `(protected)` folder, create three new files:
+    - `Books.tsx`
+    - `Create.tsx`
+    - `dashboard.tsx`
 
-2. Start the app
+### Step 2: Create Screen Components
 
-   ```bash
-   npx expo start
-   ```
+1. Create basic screen components in each file using themed components:
+    - Use `ThemedView` and `ThemedText` components for consistent theming
+    - Implement basic layout with centered content
+    - Reference the existing screen components in the `(protected)` folder
 
-In the output, you'll find options to open the app in a
+### Step 3: Create Layout File
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+1. Create `_layout.tsx` inside the `(protected)` folder
+2. This file will handle the tab navigation configuration and theming
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+### Step 4: Configure Tab Navigation
 
-## Get a fresh project
+1. In `_layout.tsx`:
 
-When you're ready, run:
+```tsx
+import React from "react";
+import { Tabs } from "expo-router";
+import { Colors } from "@/constants/colors";
+import { useColorScheme } from "react-native";
 
-```bash
-npm run reset-project
+const TabLayout = () => {
+    const themeColor = useColorScheme();
+    const theme = Colors[themeColor ?? "light"];
+
+    return (
+        <Tabs
+            screenOptions={{
+                headerShown: false,
+                tabBarStyle: {
+                    backgroundColor: theme.navBackground,
+                    paddingTop: 10,
+                    height: 90,
+                },
+                tabBarActiveTintColor: theme.iconColorFocused,
+                tabBarInactiveTintColor: theme.iconColor,
+            }}
+        >
+            <Tabs.Screen name="Books" options={{ title: "Books" }} />
+            <Tabs.Screen name="Create" options={{ title: "Create" }} />
+            <Tabs.Screen name="dashboard" options={{ title: "Profile" }} />
+        </Tabs>
+    );
+};
+
+export default TabLayout;
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+### Step 5: Understanding the Layout Configuration
 
-## Learn more
+The tab navigation layout includes:
 
-To learn more about developing your project with Expo, look at the following resources:
+-   Three main tabs: Books, Create, and Profile
+-   Custom styling for the tab bar including:
+    -   Background color based on theme
+    -   Custom height and padding
+    -   Different colors for active and inactive tabs
+-   Theme support using `useColorScheme` hook
+-   Hidden header for a cleaner look
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+### Step 6: Testing
 
-## Join the community
+1. Run your application
+2. You should see three tabs at the bottom of the screen
+3. Test navigation between different tabs
+4. Verify that the theme changes work correctly in both light and dark mode
 
-Join our community of developers creating universal apps.
+### Additional Notes
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+-   Make sure you have the required dependencies installed:
+    -   expo-router
+    -   react-native
+-   The tab navigation uses the file-based routing system of Expo Router
+-   Each tab corresponds to a file in the `(protected)` folder
+-   The `_layout.tsx` file defines the navigation structure and styling
+-   Use themed components throughout the app for consistent styling and better dark/light mode support
