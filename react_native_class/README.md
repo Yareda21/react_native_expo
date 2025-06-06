@@ -1,50 +1,101 @@
-# Welcome to your Expo app 👋
+# Class 4 - Authentication Screens Exercise
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
-<h1>For more info - check the notes inside a folder `notes` on this repo</h1>
-## Get started
+## Exercise Overview
 
-1. Install dependencies
+Create a simple authentication system with Login and Register screens, implementing navigation between them. This exercise will help you understand:
 
-   ```bash
-   npm install
-   ```
+-   Screen navigation in React Native
+-   Form handling
+-   Basic authentication UI/UX
+-   Route organization
+-   Protected routes and authentication flow
 
-2. Start the app
+## Requirements
 
-   ```bash
-   npx expo start
-   ```
+### 1. Screen Structure
 
-In the output, you'll find options to open the app in a
+Create the following screens in your `app` directory:
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
-
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
-
-## Get a fresh project
-
-When you're ready, run:
-
-```bash
-npm run reset-project
+```
+app/
+├── index.tsx (Home Screen)
+├── (auth)/
+│   ├── login.tsx
+│   └── register.tsx
+├── (protected)/
+│   └── dashboard.tsx
+└── _layout.tsx
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+### 2. Home Screen (index.tsx)
 
-## Learn more
+-   Display a welcome message
+-   Add two buttons:
+    -   "Login" - navigates to login screen
+    -   "Register" - navigates to register screen
+-   Use the themed components we created earlier for consistent styling
 
-To learn more about developing your project with Expo, look at the following resources:
+### 3. Login Screen (login.tsx)
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+Create a login form with:
 
-## Join the community
+-   Email input field
+-   Password input field
+-   "Login" button
+-   "Don't have an account? Register" link
+-   Form validation for:
+    -   Valid email format
+    -   Password length (minimum 6 characters)
+-   On successful login, navigate to the protected dashboard
 
-Join our community of developers creating universal apps.
+### 4. Register Screen (register.tsx)
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+Create a registration form with:
+
+-   Email input field
+-   Password input field
+-   Confirm password field
+-   "Register" button
+-   "Already have an account? Login" link
+-   Form validation for:
+    -   Valid email format
+    -   Password length (minimum 6 characters)
+    -   Password confirmation match
+
+### 5. Protected Dashboard (dashboard.tsx)
+
+Create a protected dashboard screen that:
+
+-   Is only accessible after successful authentication
+-   Includes authentication check on mount
+-   Redirects to login if not authenticated
+-   Displays protected content
+-   Can be accessed after successful login
+
+## Implementation Guidelines
+
+See the following files for implementation details:
+
+-   `_layout.tsx` - Navigation setup and screen configuration
+-   `(auth)/login.tsx` - Login form implementation
+-   `(auth)/register.tsx` - Registration form implementation
+-   `(protected)/dashboard.tsx` - Protected route implementation
+
+## Testing Checklist
+
+-   [ ] Navigation works between all screens
+-   [ ] Form validation works correctly
+-   [ ] Error messages are displayed appropriately
+-   [ ] UI is responsive and works on different screen sizes
+-   [ ] Theme switching works correctly on all screens
+-   [ ] Form inputs are properly styled and accessible
+-   [ ] Protected route redirects to login when not authenticated
+-   [ ] Successful login navigates to protected dashboard
+
+## Resources
+
+-   [Expo Router Documentation](https://docs.expo.dev/router/introduction/)
+-   [React Native Form Handling](https://reactnative.dev/docs/textinput)
+-   [React Native Navigation](https://reactnavigation.org/)
+
+Remember to commit your changes regularly and test thoroughly on both iOS and Android devices.
