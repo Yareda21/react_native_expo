@@ -1,101 +1,89 @@
-# Class 4 - Authentication Screens Exercise
+# Class 5 - Tabs and their Navigation
 
-## Exercise Overview
+## Setting up Tab Navigation in React Native Expo
 
-Create a simple authentication system with Login and Register screens, implementing navigation between them. This exercise will help you understand:
+### Step 1: Create Protected Folder Structure
 
--   Screen navigation in React Native
--   Form handling
--   Basic authentication UI/UX
--   Route organization
--   Protected routes and authentication flow
+1. Create a new folder called `(protected)` inside the `app` directory
+2. Inside the `(protected)` folder, create three new files:
+    - `Books.tsx`
+    - `Create.tsx`
+    - `dashboard.tsx`
 
-## Requirements
+### Step 2: Create Screen Components
 
-### 1. Screen Structure
+1. Create basic screen components in each file using themed components:
+    - Use `ThemedView` and `ThemedText` components for consistent theming
+    - Implement basic layout with centered content
+    - Reference the existing screen components in the `(protected)` folder
 
-Create the following screens in your `app` directory:
+### Step 3: Create Layout File
 
+1. Create `_layout.tsx` inside the `(protected)` folder
+2. This file will handle the tab navigation configuration and theming
+
+### Step 4: Configure Tab Navigation
+
+1. In `_layout.tsx`:
+
+```tsx
+import React from "react";
+import { Tabs } from "expo-router";
+import { Colors } from "@/constants/colors";
+import { useColorScheme } from "react-native";
+
+const TabLayout = () => {
+    const themeColor = useColorScheme();
+    const theme = Colors[themeColor ?? "light"];
+
+    return (
+        <Tabs
+            screenOptions={{
+                headerShown: false,
+                tabBarStyle: {
+                    backgroundColor: theme.navBackground,
+                    paddingTop: 10,
+                    height: 90,
+                },
+                tabBarActiveTintColor: theme.iconColorFocused,
+                tabBarInactiveTintColor: theme.iconColor,
+            }}
+        >
+            <Tabs.Screen name="Books" options={{ title: "Books" }} />
+            <Tabs.Screen name="Create" options={{ title: "Create" }} />
+            <Tabs.Screen name="dashboard" options={{ title: "Profile" }} />
+        </Tabs>
+    );
+};
+
+export default TabLayout;
 ```
-app/
-├── index.tsx (Home Screen)
-├── (auth)/
-│   ├── login.tsx
-│   └── register.tsx
-├── (protected)/
-│   └── dashboard.tsx
-└── _layout.tsx
-```
 
-### 2. Home Screen (index.tsx)
+### Step 5: Understanding the Layout Configuration
 
--   Display a welcome message
--   Add two buttons:
-    -   "Login" - navigates to login screen
-    -   "Register" - navigates to register screen
--   Use the themed components we created earlier for consistent styling
+The tab navigation layout includes:
 
-### 3. Login Screen (login.tsx)
+-   Three main tabs: Books, Create, and Profile
+-   Custom styling for the tab bar including:
+    -   Background color based on theme
+    -   Custom height and padding
+    -   Different colors for active and inactive tabs
+-   Theme support using `useColorScheme` hook
+-   Hidden header for a cleaner look
 
-Create a login form with:
+### Step 6: Testing
 
--   Email input field
--   Password input field
--   "Login" button
--   "Don't have an account? Register" link
--   Form validation for:
-    -   Valid email format
-    -   Password length (minimum 6 characters)
--   On successful login, navigate to the protected dashboard
+1. Run your application
+2. You should see three tabs at the bottom of the screen
+3. Test navigation between different tabs
+4. Verify that the theme changes work correctly in both light and dark mode
 
-### 4. Register Screen (register.tsx)
+### Additional Notes
 
-Create a registration form with:
-
--   Email input field
--   Password input field
--   Confirm password field
--   "Register" button
--   "Already have an account? Login" link
--   Form validation for:
-    -   Valid email format
-    -   Password length (minimum 6 characters)
-    -   Password confirmation match
-
-### 5. Protected Dashboard (dashboard.tsx)
-
-Create a protected dashboard screen that:
-
--   Is only accessible after successful authentication
--   Includes authentication check on mount
--   Redirects to login if not authenticated
--   Displays protected content
--   Can be accessed after successful login
-
-## Implementation Guidelines
-
-See the following files for implementation details:
-
--   `_layout.tsx` - Navigation setup and screen configuration
--   `(auth)/login.tsx` - Login form implementation
--   `(auth)/register.tsx` - Registration form implementation
--   `(protected)/dashboard.tsx` - Protected route implementation
-
-## Testing Checklist
-
--   [ ] Navigation works between all screens
--   [ ] Form validation works correctly
--   [ ] Error messages are displayed appropriately
--   [ ] UI is responsive and works on different screen sizes
--   [ ] Theme switching works correctly on all screens
--   [ ] Form inputs are properly styled and accessible
--   [ ] Protected route redirects to login when not authenticated
--   [ ] Successful login navigates to protected dashboard
-
-## Resources
-
--   [Expo Router Documentation](https://docs.expo.dev/router/introduction/)
--   [React Native Form Handling](https://reactnative.dev/docs/textinput)
--   [React Native Navigation](https://reactnavigation.org/)
-
-Remember to commit your changes regularly and test thoroughly on both iOS and Android devices.
+-   Make sure you have the required dependencies installed:
+    -   expo-router
+    -   react-native
+-   The tab navigation uses the file-based routing system of Expo Router
+-   Each tab corresponds to a file in the `(protected)` folder
+-   The `_layout.tsx` file defines the navigation structure and styling
+-   Use themed components throughout the app for consistent styling and better dark/light mode support
