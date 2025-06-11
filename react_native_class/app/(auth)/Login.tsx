@@ -23,12 +23,12 @@ const Login = () => {
             return;
         }
 
-        if (password.length < 6) {
+        if (password.length < 3) {
             Alert.alert("Error", "Password must be at least 6 characters");
             return;
         }
 
-        if (password === "123456" && email === "abc@abc.com") {
+        if (password === "123" && email === "ykebed40@gmail.com") {
             // Redirect to dashboard after successful login
             router.replace("/(protected)/dashboard");
         } else {
