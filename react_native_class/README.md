@@ -1,50 +1,96 @@
-# Welcome to your Expo app 👋
+# Protected Route Implementation
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
-<h1>For more info - check the notes inside a folder `notes` on this repo</h1>
-## Get started
+This directory contains the protected routes implementation for the React Native Expo application. The protected routes are wrapped in a tab-based navigation system that requires authentication to access.
 
-1. Install dependencies
+## Directory Structure
 
-   ```bash
-   npm install
-   ```
-
-2. Start the app
-
-   ```bash
-   npx expo start
-   ```
-
-In the output, you'll find options to open the app in a
-
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
-
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
-
-## Get a fresh project
-
-When you're ready, run:
-
-```bash
-npm run reset-project
+```
+(protected)/
+├── _layout.tsx      # Main tab navigation layout
+├── Books/           # Books tab screen
+├── Create/          # Create tab screen
+└── dashboard/       # Profile tab screen
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+## Setup Instructions
 
-## Learn more
+1. **Create Protected Directory**
 
-To learn more about developing your project with Expo, look at the following resources:
+    ```bash
+    mkdir -p app/(protected)
+    ```
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+2. **Install Required Dependencies**
 
-## Join the community
+    ```bash
+    npx expo install expo-router @expo/vector-icons
+    ```
 
-Join our community of developers creating universal apps.
+3. **Create Tab Layout**
+    - Create `_layout.tsx` in the protected directory
+    - Implement tab navigation using `expo-router`
+    - Configure tab icons using `@expo/vector-icons`
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+## Features
+
+### Tab Navigation
+
+-   **Books Tab**: Access to book-related features
+-   **Create Tab**: Create new content
+-   **Profile Tab**: User profile and settings
+
+### Theme Support
+
+-   Automatic dark/light mode support
+-   Customizable tab bar colors
+-   Dynamic icon colors based on theme
+
+### Tab Bar Configuration
+
+-   Custom tab bar height (110px)
+-   Top padding (10px)
+-   Dynamic background color
+-   Focused and unfocused icon states
+
+## Usage
+
+The protected routes are automatically wrapped in authentication checks. To access these routes:
+
+1. Ensure user is authenticated
+2. Navigate to any protected route using:
+
+    ```typescript
+    import { router } from "expo-router";
+
+    // Navigate to Books tab
+    router.push("/(protected)/Books");
+
+    // Navigate to Create tab
+    router.push("/(protected)/Create");
+
+    // Navigate to Profile tab
+    router.push("/(protected)/dashboard");
+    ```
+
+## Customization
+
+### Tab Icons
+
+Icons are implemented using `@expo/vector-icons` with the Ionicons set. To change icons:
+
+1. Import desired icon set from `@expo/vector-icons`
+2. Update the `tabBarIcon` prop in the respective `Tabs.Screen` component
+
+### Theme Colors
+
+Colors are managed through the `Colors` constant. To modify colors:
+
+1. Update the color values in `constants/colors.ts`
+2. Colors will automatically apply to the tab bar and icons
+
+## Best Practices
+
+1. Always keep authentication checks in place
+2. Use consistent icon naming conventions
+3. Maintain theme consistency across all protected routes
+4. Follow the established directory structure for new protected routes
