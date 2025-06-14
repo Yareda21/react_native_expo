@@ -21,6 +21,11 @@ const index = () => {
                     Register{" "}
                 </Link>
             </Pressable>
+            <Pressable className=" border px-6 py-3 rounded-lg bg-slate-400">
+                <Link href="/New" className=" text-center w-[100px]">
+                    New{" "}
+                </Link>
+            </Pressable>
         </ThemedView>
     );
 };

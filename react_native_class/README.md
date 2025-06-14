@@ -1,96 +1,48 @@
-# Protected Route Implementation
+# Appwrite Backend and Safe Area View
 
-This directory contains the protected routes implementation for the React Native Expo application. The protected routes are wrapped in a tab-based navigation system that requires authentication to access.
+## Safe Area View 
 
-## Directory Structure
+- create a file called New.tsx and use customized themed view for safe area view
 
-```
-(protected)/
-├── _layout.tsx      # Main tab navigation layout
-├── Books/           # Books tab screen
-├── Create/          # Create tab screen
-└── dashboard/       # Profile tab screen
-```
+## Backend Using Appwrite
+### appwrite SDK integration
+go to appwrite create a project
+go to the docs of appwrite for the integration `https://appwrite.io/docs/quick-starts/react-native`
+install the packages for the appwrite 
+`npx expo install react-native-appwrite react-native-url-polyfill`
 
-## Setup Instructions
+create a folder called `lib` in the root directory an create a file called `appwrite.js` which serves as an upwrite setting file - <b>Look at the appwrite file</b>
 
-1. **Create Protected Directory**
+Now lets create a `context` - to give access to login, logout and register function alongside with other functionalities 
 
-    ```bash
-    mkdir -p app/(protected)
-    ```
 
-2. **Install Required Dependencies**
+### Create Context 
+create a folder called context with useContext component
 
-    ```bash
-    npx expo install expo-router @expo/vector-icons
-    ```
+afteer creating a dummy functions, we go to rootlayout file wrap our app with it and create the custome hooks 
 
-3. **Create Tab Layout**
-    - Create `_layout.tsx` in the protected directory
-    - Implement tab navigation using `expo-router`
-    - Configure tab icons using `@expo/vector-icons`
+### Creating custom hooks
+create a folder called `hooks` and inside create a componenet called `useUser.tsx`
 
-## Features
+### Using the context in Login
+go to Login page create the user and console.log the value inside the handleSubmit to see the user to be `null`
+that is because there is no logic inside of login function inside of the context
 
-### Tab Navigation
+### Logging user in 
+first lets do `register function`
+what do we need when we register an person 
+`creating an account,`
+`creating unique id for the user`
+- to do that 
+first lets import the `account` from the appwrite SDK to the context
 
--   **Books Tab**: Access to book-related features
--   **Create Tab**: Create new content
--   **Profile Tab**: User profile and settings
+then import ID from react-native-appwrite module to generate an ID for each user
 
-### Theme Support
+once we are done with creating login and register function, we need to update the `Login.tsx` and `Register.tsx` component functions 
 
--   Automatic dark/light mode support
--   Customizable tab bar colors
--   Dynamic icon colors based on theme
+### Login.tsx and Register.tsx handleSubmit function updates 
+first get the `login` and `register` function from the `useUser` hook for the each components respectively
 
-### Tab Bar Configuration
 
--   Custom tab bar height (110px)
--   Top padding (10px)
--   Dynamic background color
--   Focused and unfocused icon states
-
-## Usage
-
-The protected routes are automatically wrapped in authentication checks. To access these routes:
-
-1. Ensure user is authenticated
-2. Navigate to any protected route using:
-
-    ```typescript
-    import { router } from "expo-router";
-
-    // Navigate to Books tab
-    router.push("/(protected)/Books");
-
-    // Navigate to Create tab
-    router.push("/(protected)/Create");
-
-    // Navigate to Profile tab
-    router.push("/(protected)/dashboard");
-    ```
-
-## Customization
-
-### Tab Icons
-
-Icons are implemented using `@expo/vector-icons` with the Ionicons set. To change icons:
-
-1. Import desired icon set from `@expo/vector-icons`
-2. Update the `tabBarIcon` prop in the respective `Tabs.Screen` component
-
-### Theme Colors
-
-Colors are managed through the `Colors` constant. To modify colors:
-
-1. Update the color values in `constants/colors.ts`
-2. Colors will automatically apply to the tab bar and icons
-
-## Best Practices
-
-1. Always keep authentication checks in place
-2. Use consistent icon naming conventions
-3. Maintain theme consistency across all protected routes
-4. Follow the established directory structure for new protected routes
+* then try registering on the app, it should run the login by default
+* also check on the appwrite website backend on `Auth` section - left side menu

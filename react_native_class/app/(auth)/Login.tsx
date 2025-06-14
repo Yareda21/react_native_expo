@@ -6,12 +6,15 @@ import ThemedText from "@/components/ThemedText";
 import ThemedCard from "@/components/ThemedCard";
 import Spacer from "@/components/Spacer";
 import ThemedContainer from "@/components/ThemedContainer";
+import { useUser } from "@/hooks/useUser";
 
 const Login = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-
-    const handleLogin = () => {
+    
+    const {user, login } = useUser()
+    
+    const handleLogin = async() => {
         // Basic validation
         if (!email || !password) {
             Alert.alert("Error", "Please fill in all fields");
@@ -28,13 +31,23 @@ const Login = () => {
             return;
         }
 
-        if (password === "123" && email === "ykebed40@gmail.com") {
-            // Redirect to dashboard after successful login
+        try {
+            await login(email, password);
+            console.log(user);
             router.replace("/(protected)/dashboard");
-        } else {
-            Alert.alert("Wrong", "Wrong Password and E-Mail!")
+        } catch (error) {
+            
         }
+
+        // if (password === "123" && email === "ykebed40@gmail.com") {
+        //     // Redirect to dashboard after successful login
+        //     console.log(user)
+        //     router.replace("/(protected)/dashboard");
+        // } else {
+        //     Alert.alert("Wrong", "Wrong Password and E-Mail!")
+        // }
     };
+
 
     return (
         <ThemedContainer>

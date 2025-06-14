@@ -3,11 +3,16 @@ import { Stack } from "expo-router";
 import React from "react";
 import { useColorScheme } from "react-native";
 import "./global.css";
+import { UserProvider } from "@/contexts/useContext";
 const RootLayout = () => {
     const colorTheme = useColorScheme();
     const theme = Colors[colorTheme ?? "light"];
+
+    // After Wrapping the app with userProvider, we can now provide the functions 
+    
+
     return (
-        <>
+        <UserProvider>
             {/* <StatusBar value="auto"/> */}
             <Stack
                 screenOptions={{
@@ -26,7 +31,7 @@ const RootLayout = () => {
                     }}
                 />
             </Stack>
-        </>
+        </UserProvider>
     );
 };
 

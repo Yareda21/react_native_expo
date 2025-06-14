@@ -1,17 +1,20 @@
 import { View, TextInput, Pressable, Alert } from "react-native";
 import React, { useState } from "react";
-import { Link } from "expo-router";
+import { Link, router } from "expo-router";
 import ThemedView from "@/components/ThemedView";
 import ThemedText from "@/components/ThemedText";
 import ThemedContainer from "@/components/ThemedContainer";
 import Spacer from "@/components/Spacer";
+import { useUser } from "@/hooks/useUser";
 
 const Register = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
 
-    const handleRegister = () => {
+    const { register, login } = useUser();
+
+    const handleRegister = async () => {
         // Basic validation
         if (!email || !password || !confirmPassword) {
             Alert.alert("Error", "Please fill in all fields");
@@ -33,8 +36,22 @@ const Register = () => {
             return;
         }
 
+        try {
+            await register(email, password);
+            Alert.alert("Success", "Registration successful!");
+            await login(email, password);
+            console.log(`login successful`);
+            router.replace("/(protected)/dashboard");
+        } catch (error: any) {
+            console.log("Registration error:", error);
+            Alert.alert(
+                "Registration Failed",
+                error?.message ||
+                    "An error occurred during registration. Please try again."
+            );
+        }
+
         // TODO: Implement actual registration logic
-        Alert.alert("Success", "Registration successful!");
     };
 
     return (
