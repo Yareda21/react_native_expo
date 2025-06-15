@@ -11,47 +11,68 @@ const Register = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
+    const [error, setError] = useState("");
+    const [isLoading, setIsLoading] = useState(false);
 
-    const { register, login } = useUser();
+    const { register, login, user } = useUser();
 
     const handleRegister = async () => {
+        setError("");
+        setIsLoading(true);
+
         // Basic validation
         if (!email || !password || !confirmPassword) {
-            Alert.alert("Error", "Please fill in all fields");
+            setError("Please fill in all fields");
+            setIsLoading(false);
             return;
         }
 
         if (!email.includes("@")) {
-            Alert.alert("Error", "Please enter a valid email");
+            setError("Please enter a valid email");
+            setIsLoading(false);
             return;
         }
 
-        if (password.length < 6) {
-            Alert.alert("Error", "Password must be at least 6 characters");
+        if (password.length < 8) {
+            setError("Password must be at least 8 characters");
+            setIsLoading(false);
             return;
         }
 
         if (password !== confirmPassword) {
-            Alert.alert("Error", "Passwords do not match");
+            setError("Passwords do not match");
+            setIsLoading(false);
             return;
         }
 
         try {
             await register(email, password);
-            Alert.alert("Success", "Registration successful!");
-            await login(email, password);
-            console.log(`login successful`);
-            router.replace("/(protected)/dashboard");
         } catch (error: any) {
-            console.log("Registration error:", error);
-            Alert.alert(
-                "Registration Failed",
-                error?.message ||
-                    "An error occurred during registration. Please try again."
-            );
-        }
+            console.error("Registration error:", error);
+            let errorMessage =
+                "An error occurred during registration. Please try again.";
 
-        // TODO: Implement actual registration logic
+            // Handle Appwrite specific error codes and messages
+            if (
+                error?.message?.includes(
+                    "Password must be between 8 and 256 characters long"
+                )
+            ) {
+                errorMessage =
+                    "Password must be between 8 and 256 characters long.";
+            } else if (error?.message?.includes("email already exists")) {
+                errorMessage =
+                    "This email is already registered. Please try logging in instead.";
+            } else if (error?.message?.includes("Invalid email")) {
+                errorMessage = "Please enter a valid email address.";
+            } else if (error?.message) {
+                errorMessage = error.message;
+            }
+
+            setError(errorMessage);
+            setIsLoading(false);
+            return;
+        }
     };
 
     return (
@@ -62,45 +83,68 @@ const Register = () => {
                     Register
                 </ThemedText>
 
+                {error ? (
+                    <View className="bg-red-100 dark:bg-red-900 p-4 rounded-lg mb-4">
+                        <ThemedText className="text-red-600 dark:text-red-200 text-center">
+                            {error}
+                        </ThemedText>
+                    </View>
+                ) : null}
+
                 <TextInput
                     placeholder="Email"
                     value={email}
-                    onChangeText={setEmail}
+                    onChangeText={(text) => {
+                        setEmail(text);
+                        setError("");
+                    }}
                     keyboardType="email-address"
                     autoCapitalize="none"
-                    className="bg-gray-100 dark:bg-gray-800 p-4 rounded-lg mb-4"
+                    className="bg-gray-100 p-4 rounded-lg mb-4"
                     placeholderTextColor="#666"
+                    editable={!isLoading}
                 />
 
                 <TextInput
                     placeholder="Password"
                     value={password}
-                    onChangeText={setPassword}
+                    onChangeText={(text) => {
+                        setPassword(text);
+                        setError("");
+                    }}
                     secureTextEntry
-                    className="bg-gray-100 dark:bg-gray-800 p-4 rounded-lg mb-4"
+                    className="bg-gray-100 p-4 rounded-lg mb-4"
                     placeholderTextColor="#666"
+                    editable={!isLoading}
                 />
 
                 <TextInput
                     placeholder="Confirm Password"
                     value={confirmPassword}
-                    onChangeText={setConfirmPassword}
+                    onChangeText={(text) => {
+                        setConfirmPassword(text);
+                        setError("");
+                    }}
                     secureTextEntry
-                    className="bg-gray-100 dark:bg-gray-800 p-4 rounded-lg mb-6"
+                    className="bg-gray-100 p-4 rounded-lg mb-6"
                     placeholderTextColor="#666"
+                    editable={!isLoading}
                 />
 
                 <Pressable
                     onPress={handleRegister}
-                    className="bg-blue-500 p-4 rounded-lg mb-4"
+                    className={`${
+                        isLoading ? "bg-blue-300" : "bg-blue-500"
+                    } p-4 rounded-lg mb-4`}
+                    disabled={isLoading}
                 >
                     <ThemedText className="text-white text-center font-bold">
-                        Register
+                        {isLoading ? "Registering..." : "Register"}
                     </ThemedText>
                 </Pressable>
 
                 <Link href="/Login" asChild>
-                    <Pressable>
+                    <Pressable disabled={isLoading}>
                         <ThemedText className="text-center text-blue-500">
                             Already have an account? Login
                         </ThemedText>

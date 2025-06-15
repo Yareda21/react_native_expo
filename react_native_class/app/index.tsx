@@ -4,11 +4,19 @@ import ThemedView from "@/components/ThemedView";
 import { Link } from "expo-router";
 import Spacer from "@/components/Spacer";
 import ThemedText from "@/components/ThemedText";
+import { useUser } from "@/hooks/useUser";
 
-const index = () => {
+const Home = () => {
+    const { user } = useUser();
+    console.log(user)
+
+
+
     return (
         <ThemedView className=" w-full flex-1 justify-center items-center">
-            <ThemedText className="text-2xl ">Welcome to My APP</ThemedText>
+            <ThemedText className="text-2xl ">
+                Welcome to My APP user
+            </ThemedText>
             <Spacer />
             <Pressable className=" border px-6  py-3 rounded-lg bg-slate-400">
                 <Link href="/Login" className=" text-center w-[100px]">
@@ -21,13 +29,13 @@ const index = () => {
                     Register{" "}
                 </Link>
             </Pressable>
-            <Pressable className=" border px-6 py-3 rounded-lg bg-slate-400">
+            {/* <Pressable className=" border px-6 py-3 rounded-lg bg-slate-400">
                 <Link href="/New" className=" text-center w-[100px]">
                     New{" "}
                 </Link>
-            </Pressable>
+            </Pressable> */}
         </ThemedView>
     );
 };
 
-export default index;
+export default Home;

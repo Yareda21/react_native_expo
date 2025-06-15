@@ -2,12 +2,12 @@ import { StatusBar, useColorScheme } from "react-native";
 import React from "react";
 import { Stack } from "expo-router";
 import { Colors } from "@/constants/colors";
-
+import GuestOnly from "@/components/GuestOnly";
 const AuthLayout = () => {
     const colorTheme = useColorScheme();
     const theme = Colors[colorTheme ?? "light"];
     return (
-        <>
+        <GuestOnly>
             {/* <StatusBar value="auto" /> */}
             <Stack
                 screenOptions={{
@@ -21,7 +21,7 @@ const AuthLayout = () => {
                     options={{ title: "Registration Page" }}
                 />
             </Stack>
-        </>
+        </GuestOnly>
     );
 };
 

@@ -1,49 +1,87 @@
 // first import the context
-import { createContext, useState, ReactNode } from "react";
+import { createContext, useState, ReactNode, useEffect } from "react";
 import { account } from "@/lib/appwrite";
-import { ID } from "react-native-appwrite";
+import { ID, AppwriteException } from "react-native-appwrite";
 
 interface UserContextType {
     user: null | any;
-    login: (email: string, password: string) => Promise<void>;
+    login: (email: string, password: string) => Promise<any>;
     logout: () => Promise<void>;
-    register: (email: string, password: string) => Promise<void>;
+    register: (email: string, password: string) => Promise<any>;
+    authChecked: boolean;
 }
 
 // invoke the context to create new UserContext
 export const UserContext = createContext<UserContextType | null>(null);
 
 // creating Provider Component
-// - for allow us to track user states
-// - pass functions into contextProvider which wrapps all the app
-
 export function UserProvider({ children }: { children: ReactNode }) {
-    const [user, setUser] = useState<UserContextType | null>(null);
+    const [user, setUser] = useState<null | any>(null);
+    const [authChecked, setAuthChecked] = useState(false);
 
     async function register(email: string, password: string) {
         try {
             await account.create(ID.unique(), email, password);
-            console.log(`registered`);
-            await login(email, password);
-        } catch (error) {
-            console.log("Registration error:", error);
-            throw error; // Re-throw the error to handle it in the component
+            return await login(email, password);
+        } catch (err: unknown) {
+            console.log("Registration error:", err);
+            const message =
+                err instanceof AppwriteException
+                    ? err.message
+                    : err instanceof Error
+                    ? err.message
+                    : String(err);
+            throw new Error(message); // normalize error
         }
     }
+
     async function login(email: string, password: string) {
         try {
+            // create session
             await account.createEmailPasswordSession(email, password);
+            // fetch user account data
             const response = await account.get();
             setUser(response);
-            console.log("User loged in");
-        } catch (error) {
-            console.log(error);
+            return response;
+        } catch (err: unknown) {
+            console.log("Login error in context:", err);
+            const message =
+                err instanceof AppwriteException
+                    ? err.message
+                    : err instanceof Error
+                    ? err.message
+                    : String(err);
+            throw new Error(message); // normalize error
         }
     }
-    async function logout() {}
+
+    async function logout() {
+        try {
+            await account.deleteSession("current");
+        } finally {
+            setUser(null);
+        }
+    }
+
+    async function getInitialUserValue() {
+        try {
+            const response = await account.get();
+            setUser(response);
+        } catch {
+            setUser(null);
+        } finally {
+            setAuthChecked(true);
+        }
+    }
+
+    useEffect(() => {
+        getInitialUserValue();
+    }, []);
 
     return (
-        <UserContext.Provider value={{ user, login, logout, register }}>
+        <UserContext.Provider
+            value={{ user, login, logout, register, authChecked }}
+        >
             {children}
         </UserContext.Provider>
     );
