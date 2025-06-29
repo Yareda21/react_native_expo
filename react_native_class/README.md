@@ -140,6 +140,7 @@ components/
 └── ThemedLoader.tsx
 contexts/
 └── TaskContext.tsx
+└── UserContext.tsx
 hooks/
 ├── useUser.tsx
 └── useTasks.tsx
