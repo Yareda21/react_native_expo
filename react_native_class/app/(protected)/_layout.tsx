@@ -17,7 +17,7 @@ const TabLayout = () => {
                         tabBarStyle: {
                             backgroundColor: theme.navBackground,
                             paddingTop: 10,
-                            height: 110,
+                            height: 70,
                         },
                         tabBarActiveTintColor: theme.iconColorFocused,
                         tabBarInactiveTintColor: theme.iconColor,
@@ -27,6 +27,7 @@ const TabLayout = () => {
                         name="Books"
                         options={{
                             title: "Books",
+
                             tabBarIcon: ({ focused }) => (
                                 <Ionicons
                                     size={24}

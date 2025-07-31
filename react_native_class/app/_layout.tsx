@@ -1,19 +1,18 @@
 import { Colors } from "@/constants/colors";
 import { Stack } from "expo-router";
 import React from "react";
-import { useColorScheme } from "react-native";
+import { StatusBar, useColorScheme } from "react-native";
 import "./global.css";
 import { UserProvider } from "@/contexts/useContext";
 const RootLayout = () => {
     const colorTheme = useColorScheme();
     const theme = Colors[colorTheme ?? "light"];
 
-    // After Wrapping the app with userProvider, we can now provide the functions 
-    
+    // After Wrapping the app with userProvider, we can now provide the functions
 
     return (
         <UserProvider>
-            {/* <StatusBar value="auto"/> */}
+            <StatusBar value="auto" />
             <Stack
                 screenOptions={{
                     headerStyle: { backgroundColor: theme.navBackground },
@@ -22,11 +21,16 @@ const RootLayout = () => {
                 }}
             >
                 <Stack.Screen name="index" />
-                <Stack.Screen name="(auth)" />
+                <Stack.Screen
+                    name="(auth)"
+                    options={{
+                        headerShown: false,
+                    }}
+                />
                 <Stack.Screen
                     name="(protected)"
                     options={{
-                        headerShown: true,
+                        headerShown: false,
                         title: "Dashboard",
                     }}
                 />

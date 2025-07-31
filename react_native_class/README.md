@@ -21,3 +21,10 @@ As usual
 then import much of the code from doc to your dashboard
 
 # user marker
+
+on dashboard.tsx
+
+-   inside the mapView add the marker
+-   loading of data should be done
+-   adding user info on top of the map
+-

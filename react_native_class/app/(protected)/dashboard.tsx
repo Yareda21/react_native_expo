@@ -1,57 +1,165 @@
 import { useUser } from "@/hooks/useUser";
 import ThemedText from "@/components/ThemedText";
 import ThemedView from "@/components/ThemedView";
-import { Pressable } from "react-native";
-import { useState } from "react";
-import MapView, { PROVIDER_GOOGLE } from "react-native-maps";
+import {
+    Pressable,
+    ActivityIndicator,
+    StyleSheet,
+    Image,
+    View,
+    Text,
+} from "react-native";
+import { useState, useRef } from "react";
+import MapView, { PROVIDER_GOOGLE, Marker, MapType } from "react-native-maps";
 import { useLocation } from "@/hooks/useLocation";
+import { Ionicons } from "@expo/vector-icons";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function Dashboard() {
     const { logout, user } = useUser();
     const [isLoading, setIsLoading] = useState(false);
-
     const { location } = useLocation();
-    // const { latitude, longitude } = location;
+    const mapRef = useRef(null);
+    const [mapType, setMapType] = useState<MapType>("standard");
 
-    console.log(location);
+    const handleLogout = async () => {
+        setIsLoading(true);
+        await logout();
+    };
+
+    const centerMap = () => {
+        if (location && mapRef.current) {
+            mapRef.current.animateToRegion(
+                {
+                    latitude: location.latitude,
+                    longitude: location.longitude,
+                    latitudeDelta: 0.042,
+                    longitudeDelta: 0.042,
+                },
+                500
+            );
+        }
+    };
+
+    const toggleMapType = () => {
+        setMapType((prev) => (prev === "standard" ? "satellite" : "standard"));
+    };
+
     return (
-        <ThemedView className="flex-1 items-center justify-center p-5">
-            <ThemedText className="text-2xl font-bold mb-2.5">
-                Protected Dashboard
-                {user.email}
-            </ThemedText>
-            <ThemedText className="text-base text-gray-600">
-                Welcome to your Dashboard!
-            </ThemedText>
-            <Pressable
-                onPress={logout}
-                className={`${
-                    isLoading ? "bg-blue-300" : "bg-blue-500"
-                } p-4 rounded-lg mb-4`}
-                disabled={isLoading}
-            >
-                <ThemedText className="text-white text-center font-bold">
-                    {isLoading ? "Logging Out..." : "Logout"}
-                </ThemedText>
-            </Pressable>
-            {location && (
-                <MapView
-                    style={{ width: "100%", height: 400 }}
-                    initialRegion={{
-                        latitude: location.latitude,
-                        longitude: location.longitude,
-                        latitudeDelta: 0.042,
-                        longitudeDelta: 0.042,
-                    }}
-                    provider={PROVIDER_GOOGLE}
-                    showsUserLocation={true}
-                    showsMyLocationButton={true}
-                    showsCompass={true}
-                    showsScale={true}
-                    showsTraffic={true}
-                    showsBuildings={true}
-                />
+        <View className="flex-1">
+            {/* Map View */}
+            {location ? (
+                <View className="flex-1">
+                    <MapView
+                        ref={mapRef}
+                        style={StyleSheet.absoluteFillObject}
+                        initialRegion={{
+                            latitude: location.latitude,
+                            longitude: location.longitude,
+                            latitudeDelta: 0.042,
+                            longitudeDelta: 0.042,
+                        }}
+                        provider={PROVIDER_GOOGLE}
+                        mapType={mapType}
+                        showsUserLocation={true}
+                        showsMyLocationButton={false}
+                        showsCompass={true}
+                        showsScale={true}
+                        showsTraffic={true}
+                        showsBuildings={true}
+                    >
+                        <Marker
+                            coordinate={{
+                                latitude: location.latitude,
+                                longitude: location.longitude,
+                            }}
+                            title="Your Location"
+                            description="This is your current position"
+                        >
+                            <Image
+                                source={require("@/assets/images/cross.png")}
+                                style={{ width: 23, height: 35 }}
+                            />
+                        </Marker>
+                    </MapView>
+
+                    {/* Transparent Overlay Header */}
+                    <SafeAreaView className="absolute top-0 left-0 right-0 z-10">
+                        <View className="flex-row justify-between items-center p-4">
+                            <View className="bg-black/30 rounded-xl p-3">
+                                <Text className="text-white text-xl font-bold">
+                                    Dashboard
+                                </Text>
+                            </View>
+
+                            <Pressable
+                                onPress={handleLogout}
+                                className="flex-row items-center bg-red-500/90 rounded-lg px-3 py-2"
+                                disabled={isLoading}
+                            >
+                                {isLoading ? (
+                                    <ActivityIndicator color="white" />
+                                ) : (
+                                    <>
+                                        <Ionicons
+                                            name="log-out-outline"
+                                            size={18}
+                                            color="white"
+                                        />
+                                        <Text className="text-white ml-2">
+                                            Logout
+                                        </Text>
+                                    </>
+                                )}
+                            </Pressable>
+                        </View>
+
+                        {/* User Info */}
+                        <View className="bg-black/30 rounded-xl mx-4 p-3 mt-2">
+                            <Text className="text-white text-base">
+                                Welcome,{" "}
+                                <Text className="font-bold text-blue-300">
+                                    {user.email}
+                                </Text>
+                            </Text>
+                            <Text className="text-gray-300 text-sm mt-1">
+                                Viewing your current location
+                            </Text>
+                        </View>
+                    </SafeAreaView>
+
+                    {/* Map Controls */}
+                    <View className="absolute right-4 bottom-4 space-y-3">
+                        <Pressable
+                            onPress={centerMap}
+                            className="bg-white/90 p-3 rounded-full shadow-lg"
+                        >
+                            <Ionicons name="locate" size={24} color="#3b82f6" />
+                        </Pressable>
+                        <Pressable
+                            onPress={toggleMapType}
+                            className="bg-white/90 p-3 rounded-full shadow-lg"
+                        >
+                            <Ionicons
+                                name={
+                                    mapType === "standard"
+                                        ? "map"
+                                        : "map-outline"
+                                }
+                                size={24}
+                                color="#3b82f6"
+                            />
+                        </Pressable>
+                    </View>
+                </View>
+            ) : (
+                <ThemedView className="flex-1 items-center justify-center">
+                    <ActivityIndicator size="large" color="#3b82f6" />
+                    <ThemedText className="mt-4 text-gray-500">
+                        Getting your location...
+                    </ThemedText>
+                </ThemedView>
             )}
-        </ThemedView>
+        </View>
     );
 }
