@@ -3,10 +3,17 @@ import ThemedText from "@/components/ThemedText";
 import ThemedView from "@/components/ThemedView";
 import { Pressable } from "react-native";
 import { useState } from "react";
+import MapView, { PROVIDER_GOOGLE } from "react-native-maps";
+import { useLocation } from "@/hooks/useLocation";
 
 export default function Dashboard() {
     const { logout, user } = useUser();
     const [isLoading, setIsLoading] = useState(false);
+
+    const { location } = useLocation();
+    // const { latitude, longitude } = location;
+
+    console.log(location);
     return (
         <ThemedView className="flex-1 items-center justify-center p-5">
             <ThemedText className="text-2xl font-bold mb-2.5">
@@ -27,6 +34,24 @@ export default function Dashboard() {
                     {isLoading ? "Logging Out..." : "Logout"}
                 </ThemedText>
             </Pressable>
+            {location && (
+                <MapView
+                    style={{ width: "100%", height: 400 }}
+                    initialRegion={{
+                        latitude: location.latitude,
+                        longitude: location.longitude,
+                        latitudeDelta: 0.042,
+                        longitudeDelta: 0.042,
+                    }}
+                    provider={PROVIDER_GOOGLE}
+                    showsUserLocation={true}
+                    showsMyLocationButton={true}
+                    showsCompass={true}
+                    showsScale={true}
+                    showsTraffic={true}
+                    showsBuildings={true}
+                />
+            )}
         </ThemedView>
     );
 }
