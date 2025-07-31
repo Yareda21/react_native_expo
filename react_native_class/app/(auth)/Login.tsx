@@ -71,6 +71,7 @@ export default function Login() {
                     className="bg-gray-100 dark:bg-gray-800 dark:text-gray-200 p-4 rounded-lg mb-4"
                     placeholderTextColor="#666"
                     editable={!isLoading}
+                    
                 />
 
                 <TextInput

@@ -13,7 +13,6 @@ interface UserContextType {
 
 // invoke the context to create new UserContext
 export const UserContext = createContext<UserContextType | null>(null);
-
 // creating Provider Component
 export function UserProvider({ children }: { children: ReactNode }) {
     const [user, setUser] = useState<null | any>(null);

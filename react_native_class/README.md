@@ -57,10 +57,9 @@ first get the `login` and `register` function from the `useUser` hook for the ea
 
 ### loading current user on app start and close & Guestonly and useronly
 
-we need to make the app to detect the user when first starts
-inorder to do that we need to create `useEffect` hood on the `context`
+we need to make the app to detect the user when first 
 
-second thing we need is a state of `authCheck` so that we know the auth is checked when the app starts
+second thing we need is a state of `authChck` so that we know the auth is checked when the app starts
 
 -   now lets create a component that protects the `protected group route`
     inside of component create `Usersonly.tsx`
