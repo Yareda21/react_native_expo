@@ -1,30 +1,50 @@
-# Map view
+# Welcome to your Expo app 👋
 
-install `npx expo install react-native-maps` by going to
-https://docs.expo.dev/versions/latest/sdk/map-view/
+This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+<h1>For more info - check the notes inside a folder `notes` on this repo</h1>
+## Get started
 
-go to dashboard to see more
+1. Install dependencies
 
-# ask user location area
+   ```bash
+   npm install
+   ```
 
-we need to install expo-location module
-https://docs.expo.dev/versions/latest/sdk/location/
-npx expo install expo-location
+2. Start the app
 
-lets create a context of the user location
-As usual
+   ```bash
+   npx expo start
+   ```
 
--   create UserLocationContext
--   Create useLocation hook
--   wrap the auth layout with the context
+In the output, you'll find options to open the app in a
 
-then import much of the code from doc to your dashboard
+- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
+- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
+- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
+- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
 
-# user marker
+You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
 
-on dashboard.tsx
+## Get a fresh project
 
--   inside the mapView add the marker
--   loading of data should be done
--   adding user info on top of the map
--
+When you're ready, run:
+
+```bash
+npm run reset-project
+```
+
+This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+
+## Learn more
+
+To learn more about developing your project with Expo, look at the following resources:
+
+- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
+- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+
+## Join the community
+
+Join our community of developers creating universal apps.
+
+- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
+- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
