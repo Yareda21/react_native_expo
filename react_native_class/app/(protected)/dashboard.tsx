@@ -9,11 +9,14 @@ import {
     View,
     Text,
 } from "react-native";
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import MapView, { PROVIDER_GOOGLE, Marker, MapType } from "react-native-maps";
 import { useLocation } from "@/hooks/useLocation";
 import { Ionicons } from "@expo/vector-icons";
 import { SafeAreaView } from "react-native-safe-area-context";
+
+import SearchBar from "../../components/SearchBar";
+import NewNearbyPlaces from "../../lib/GlobalApi";
 
 export default function Dashboard() {
     const { logout, user } = useUser();
@@ -44,6 +47,31 @@ export default function Dashboard() {
     const toggleMapType = () => {
         setMapType((prev) => (prev === "standard" ? "satellite" : "standard"));
     };
+
+    useEffect(() => {
+        if (location && mapRef.current) {
+            const GetNearByPlaces = () => {
+                // first add the data info to the NewNearbyPlaces function
+                const data = {
+                    includedTypes: ["church"],
+                    maxResultCount: 10,
+                    locationRestriction: {
+                        Circle: {
+                            center: {
+                                latitude: location.latitude,
+                                longitude: location.longitude,
+                            },
+                            radius: 5000, // 5km radius
+                        },
+                    },
+                };
+                NewNearbyPlaces(data).then((res) => {
+                    console.log(JSON.stringify(res.data));
+                });
+            };
+            GetNearByPlaces();
+        }
+    }, [location]);
 
     return (
         <View className="flex-1">
@@ -85,46 +113,46 @@ export default function Dashboard() {
 
                     {/* Transparent Overlay Header */}
                     <SafeAreaView className="absolute top-0 left-0 right-0 z-10">
-                        <View className="flex-row justify-between items-center p-4">
-                            <View className="bg-black/30 rounded-xl p-3">
-                                <Text className="text-white text-xl font-bold">
-                                    Dashboard
-                                </Text>
-                            </View>
-
-                            <Pressable
-                                onPress={handleLogout}
-                                className="flex-row items-center bg-red-500/90 rounded-lg px-3 py-2"
-                                disabled={isLoading}
-                            >
-                                {isLoading ? (
-                                    <ActivityIndicator color="white" />
-                                ) : (
-                                    <>
-                                        <Ionicons
-                                            name="log-out-outline"
-                                            size={18}
-                                            color="white"
-                                        />
-                                        <Text className="text-white ml-2">
-                                            Logout
-                                        </Text>
-                                    </>
-                                )}
-                            </Pressable>
-                        </View>
-
                         {/* User Info */}
                         <View className="bg-black/30 rounded-xl mx-4 p-3 mt-2">
-                            <Text className="text-white text-base">
-                                Welcome,{" "}
-                                <Text className="font-bold text-blue-300">
-                                    {user.email}
-                                </Text>
-                            </Text>
-                            <Text className="text-gray-300 text-sm mt-1">
-                                Viewing your current location
-                            </Text>
+                            <View className="flex-row items-center justify-between">
+                                <View>
+                                    <Text className="text-white text-base">
+                                        Welcome,{" "}
+                                        <Text className="font-bold text-blue-300">
+                                            {user.email}
+                                        </Text>
+                                    </Text>
+                                    <Text className="text-gray-300 text-sm mt-1">
+                                        Viewing your current location
+                                    </Text>
+                                </View>
+                                <Pressable
+                                    onPress={handleLogout}
+                                    className="flex-row items-center bg-red-500/90 rounded-lg w-28  px-3 py-2"
+                                    disabled={isLoading}
+                                >
+                                    {isLoading ? (
+                                        <ActivityIndicator color="white" />
+                                    ) : (
+                                        <>
+                                            <Ionicons
+                                                name="log-out-outline"
+                                                size={18}
+                                                color="white"
+                                            />
+                                            <Text className="text-white ml-2">
+                                                Logout
+                                            </Text>
+                                        </>
+                                    )}
+                                </Pressable>
+                            </View>
+                            <SearchBar
+                                searchedLocation={(location: any) =>
+                                    console.log(location)
+                                }
+                            />
                         </View>
                     </SafeAreaView>
 

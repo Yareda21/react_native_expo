@@ -8,9 +8,7 @@ import { useUser } from "@/hooks/useUser";
 
 const Home = () => {
     const { user } = useUser();
-    console.log(user)
-
-
+    console.log(user);
 
     return (
         <ThemedView className=" w-full flex-1 justify-center items-center">
@@ -29,11 +27,6 @@ const Home = () => {
                     Register{" "}
                 </Link>
             </Pressable>
-            {/* <Pressable className=" border px-6 py-3 rounded-lg bg-slate-400">
-                <Link href="/New" className=" text-center w-[100px]">
-                    New{" "}
-                </Link>
-            </Pressable> */}
         </ThemedView>
     );
 };
