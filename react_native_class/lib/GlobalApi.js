@@ -9,11 +9,11 @@ const config = {
         "X-Goog-FieldMask": [
             "places.displayName",
             "places.formattedAddress",
-            "places.geometry",
             "places.location",
+            "places.photos",
+            "places.geometry",
             "places.churchType",
             "places.churchSize",
-            "places.photos",
             "places.churchDenomination",
             "places.churchServiceTimes",
         ],
