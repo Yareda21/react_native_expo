@@ -17,6 +17,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 
 import SearchBar from "../../components/SearchBar";
 import NewNearbyPlaces from "../../lib/GlobalApi";
+import PlaceListView from "@/components/PlaceListView";
 
 export default function Dashboard() {
     const { logout, user } = useUser();
@@ -24,6 +25,8 @@ export default function Dashboard() {
     const { location } = useLocation();
     const mapRef = useRef(null);
     const [mapType, setMapType] = useState<MapType>("standard");
+
+    const [placeList, setPlaceList] = useState<any[]>([]);
 
     const handleLogout = async () => {
         setIsLoading(true);
@@ -67,6 +70,7 @@ export default function Dashboard() {
                 };
                 NewNearbyPlaces(data).then((res) => {
                     console.log(JSON.stringify(res.data));
+                    setPlaceList(res.data.places || []);
                 });
             };
             GetNearByPlaces();
@@ -178,6 +182,10 @@ export default function Dashboard() {
                                 color="#3b82f6"
                             />
                         </Pressable>
+                    </View>
+
+                    <View className="absolute bottom-0 left-0 right-0 bg-white/90 p-4 rounded-t-lg shadow-lg">
+                        {placeList && <PlaceListView placeList={placeList} />}
                     </View>
                 </View>
             ) : (

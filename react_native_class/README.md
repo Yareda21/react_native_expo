@@ -66,4 +66,16 @@ now lets create a global Api file to use this in lib folder - GlobalApi.js
 
 -   if you finidh this, copy all the data from the console and create a json file and see it if it correct
 
+## protected dashboard should only have 3 tabs -> MAP, Favorite, and Profile
+
 # Next Class - Display Church info
+
+-   collect the data in one state by creating placesList state
+-   then add setPlacesList(res.data) to the useeffect hook in dashboard
+
+-   now lets create a component for this datas to be displayed - PlaceListView.jsx
+
+-   in order to render the each places create PlacesList component that will be added to the placeslistview
+    also make sure to use dummy photo for now but use the following instructions to make the image workable
+
+# Adding markers of the churchs on the map

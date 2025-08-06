@@ -10,6 +10,7 @@ const config = {
             "places.displayName",
             "places.formattedAddress",
             "places.location",
+            "places.shortFormattedAddress",
             "places.photos",
             "places.geometry",
             "places.churchType",
