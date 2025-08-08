@@ -79,15 +79,3 @@ now lets create a global Api file to use this in lib folder - GlobalApi.js
     also make sure to use dummy photo for now but use the following instructions to make the image workable
 
 # Adding markers of the churchs on the map
-
--   now since we have the placesList we need to use it on the MAPVIEW - check the code on dashboard
-
--   below the marker code we need to add a mapping function to render each market on a new component called `MARKERS.TSX`
-
--   what we need to do is, when the marker is pressed, the church detail should be visible on the bottom
-
--   Search for Church markers for better markers
-
--   You have to enable pagging, ref and many other things in the PlaceListVew component
-
--   inorder to get the current selected church we need to create a context file
