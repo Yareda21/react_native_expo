@@ -1,10 +1,13 @@
 import { View, Text, Image } from "react-native";
 import React from "react";
 import { FontAwesome } from "@expo/vector-icons";
+// import { config } from "dotenv";
+
+// config();
 
 const PlaceItem = ({ place }: any) => {
     const PHOTO_BASE_URL = "https://places.googleapis.com/v1";
-    const API_KEY = "API KEY HERE";
+    const API_KEY = process.env.EXPO_PUBLIC_API_KEY;
 
     return (
         <View className="w-full">
