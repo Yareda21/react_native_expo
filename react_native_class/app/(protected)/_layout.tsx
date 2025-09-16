@@ -17,7 +17,7 @@ const TabLayout = () => {
                         tabBarStyle: {
                             backgroundColor: theme.navBackground,
                             paddingTop: 10,
-                            height: 70,
+                            height: 100,
                         },
                         tabBarActiveTintColor: theme.iconColorFocused,
                         tabBarInactiveTintColor: theme.iconColor,
