@@ -27,4 +27,3 @@ on dashboard.tsx
 -   inside the mapView add the marker
 -   loading of data should be done
 -   adding user info on top of the map
--
